@@ -18,13 +18,14 @@ int main(int argc, char* argv[])
 	{
 		char buffer[BUFFER_SIZE];
 		char * text = (char*) malloc(BUFFER_SIZE);
-		unsigned int c = 1;
-		while(read(0,&buffer,BUFFER_SIZE) > 0)
+		unsigned int c = 1, bytes_read = 0;
+		while((bytes_read = read(0,&buffer,BUFFER_SIZE)) > 0)
 		{
 			if(c > 1) text = realloc(text, BUFFER_SIZE * c);
 			memcpy(text + (c-1) * BUFFER_SIZE, buffer, BUFFER_SIZE);
 			c++;
 		}
+		
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, DEFAULT_TITLE, text, NULL);
 	}
 	else if(argc < 3)
